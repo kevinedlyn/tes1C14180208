@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { FotoService } from '../foto.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +9,23 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  urlImageStorage  : string[] = [];
+  constructor(public fotoservice : FotoService,
+    private afStorage : AngularFireStorage,
+    public fotoService : FotoService) {}
 
+  tambahfoto(){
+    this.fotoservice.tambahfoto();
+  }
+
+  uploadFoto(){
+    this.urlImageStorage = [];
+    for (var index in this.fotoService.dataFoto){
+      const imgFilepath = `imgStorage/${this.fotoService.dataFoto[index].filePath}`;
+
+      this.afStorage.upload(imgFilepath, this.fotoService.dataFoto[index].dataImage).then(() => {
+        this.afStorage.storage.ref().child(imgFilepath).getDownloadURL()
+      });
+    }
+  }
 }
