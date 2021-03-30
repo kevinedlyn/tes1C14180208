@@ -24,7 +24,7 @@ export class Tab2Page {
       const imgFilepath = `imgStorage/${this.fotoService.dataFoto[index].filePath}`;
 
       this.afStorage.upload(imgFilepath, this.fotoService.dataFoto[index].dataImage).then(() => {
-        this.afStorage.storage.ref().child(imgFilepath).getDownloadURL()
+        
       });
     }
   }
